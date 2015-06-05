@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="project.ipromo.ParseActivity.SimgleItemView">
+
+    <TextView
+        android:id="@+id/rank"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/flag" />
+
+    <TextView
+        android:id="@+id/country"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:layout_above="@+id/population"
+        android:layout_alignEnd="@+id/rank"
+        android:layout_marginBottom="24dp"
+        android:layout_toEndOf="@+id/flag" />
+
+    <TextView
+        android:id="@+id/population"
+        android:layout_width="300dp"
+        android:layout_height="100dp"
+        android:inputType="textMultiLine"
+        android:layout_alignParentEnd="true"
+        android:layout_toEndOf="@+id/flag"
+        android:layout_alignBottom="@+id/flag"
+        android:textSize="15dp" />
+    
+    <ImageView
+        android:id="@+id/flag"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:background="#000000"
+        android:padding="1dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="300dp"
+        android:layout_height="wrap_content"
+        android:textSize="15dp"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <Button
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="Canjear Promoción"
+        android:id="@+id/btnUsarPromo"
+        android:layout_below="@+id/textView"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="78dp"
+        android:onClick="canjearCupo" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Caduca:"
+        android:id="@+id/textView2"
+        android:layout_above="@+id/textView"
+        android:layout_alignStart="@+id/textView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/txtId"
+        android:layout_below="@+id/btnUsarPromo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp" />
+
+</RelativeLayout>
