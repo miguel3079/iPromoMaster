@@ -31,34 +31,46 @@
 
         <activity
             android:name=".activity.MainActivity"
-            android:label="@string/title_activity_main" >
+            android:label="@string/title_activity_main"
+            android:screenOrientation="portrait">
+
         </activity>
         <activity
             android:name=".activity.Promocion1"
             android:label="@string/title_activity_promo1"
-            android:launchMode="singleInstance" >
+            android:launchMode="singleInstance"
+            android:screenOrientation="portrait">
         </activity>
-        <activity android:name=".ParseActivity.MainActivity" >
+        <activity android:name=".ParseActivity.Promociones"
+            android:screenOrientation="portrait">
+
+        </activity>
+        <activity android:name=".ParseActivity.SingleItemView"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name=".activity.Login"
+            android:label="iPromo"
+            android:screenOrientation="portrait">
+
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-        </activity>
-        <activity android:name=".ParseActivity.SingleItemView" >
-        </activity>
-        <activity
-            android:name=".activity.Login"
-            android:label="@string/title_activity_login" >
 
         </activity>
         <activity
             android:name=".activity.Registro"
-            android:label="@string/title_activity_registro" >
+            android:label="@string/title_activity_registro"
+            android:screenOrientation="portrait">
         </activity>
         <activity
             android:name=".ParseActivity.BeaconsEmpresas"
-            android:label="@string/title_activity_beacons_empresas" >
+            android:label="@string/title_activity_beacons_empresas"
+            android:screenOrientation="portrait">
+
+
         </activity>
     </application>
 

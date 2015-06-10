@@ -40,10 +40,10 @@ public class IpromoHelper extends SQLiteOpenHelper {
    /*
     * Insertamos datos iniciales
     */
-        //db.execSQL("INSERT INTO HIPOTECA(_id, hip_nombre) VALUES(1,'Santander')");
 
 
-        Log.i(this.getClass().toString(), "Datos iniciales HIPOTECA insertados");
+
+        Log.i(this.getClass().toString(), "Datos iniciales PROMOCIONES insertados");
 
         Log.i(this.getClass().toString(), "Base de datos creada");
     }

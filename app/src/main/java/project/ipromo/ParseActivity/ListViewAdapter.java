@@ -21,36 +21,35 @@ public class ListViewAdapter extends BaseAdapter {
 	Context context;
 	LayoutInflater inflater;
 	ImageLoader imageLoader;
-	private List<WorldPopulation> worldpopulationlist = null;
-	private ArrayList<WorldPopulation> arraylist;
+	private List<PromocionesTotal> promocionesList = null;
+	private ArrayList<PromocionesTotal> arraylist;
 
 	public ListViewAdapter(Context context,
-			List<WorldPopulation> worldpopulationlist) {
+			List<PromocionesTotal> promocionesList) {
 		this.context = context;
-		this.worldpopulationlist = worldpopulationlist;
+		this.promocionesList = promocionesList;
 		inflater = LayoutInflater.from(context);
-		this.arraylist = new ArrayList<WorldPopulation>();
-		this.arraylist.addAll(worldpopulationlist);
+		this.arraylist = new ArrayList<PromocionesTotal>();
+		this.arraylist.addAll(promocionesList);
 		imageLoader = new ImageLoader(context);
 	}
 
 	public class ViewHolder {
-		TextView rank;
 		TextView title;
-		TextView subtitle;
+		TextView precio;
         TextView fecha;
         TextView id;
-		ImageView flag;
+		ImageView image;
 	}
 
 	@Override
 	public int getCount() {
-		return worldpopulationlist.size();
+		return promocionesList.size();
 	}
 
 	@Override
 	public Object getItem(int position) {
-		return worldpopulationlist.get(position);
+		return promocionesList.get(position);
 	}
 
 	@Override
@@ -64,24 +63,24 @@ public class ListViewAdapter extends BaseAdapter {
 			holder = new ViewHolder();
 			view = inflater.inflate(R.layout.listview_item, null);
 			// Locate the TextViews in listview_item.xml
-			holder.rank = (TextView) view.findViewById(R.id.rank);
-			holder.title = (TextView) view.findViewById(R.id.country);
+			holder.title = (TextView) view.findViewById(R.id.title);
+			holder.precio = (TextView) view.findViewById(R.id.precio);
 
 			// Locate the ImageView in listview_item.xml
-			holder.flag = (ImageView) view.findViewById(R.id.flag);
+			holder.image = (ImageView) view.findViewById(R.id.image);
 			view.setTag(holder);
 		} else {
 			holder = (ViewHolder) view.getTag();
 		}
 		// Set the results into TextViews
-		holder.rank.setText(worldpopulationlist.get(position).getRank());
+		holder.title.setText(promocionesList.get(position).getTitle());
        // holder.fecha.setText((worldpopulationlist.get(position).getFecha()).toString());
-		holder.title.setText(worldpopulationlist.get(position).getCountry());
+		holder.precio.setText(promocionesList.get(position).getPrecio());
 		//holder.subtitle.setText(worldpopulationlist.get(position).getPopulation());
        // holder.id.setText(worldpopulationlist.get(position).getId());
 		// Set the results into ImageView
-		imageLoader.DisplayImage(worldpopulationlist.get(position).getFlag(),
-				holder.flag);
+		imageLoader.DisplayImage(promocionesList.get(position).getImage(),
+				holder.image);
 		// Listen for ListView Item Click
 		view.setOnClickListener(new OnClickListener() {
 
@@ -89,22 +88,25 @@ public class ListViewAdapter extends BaseAdapter {
 			public void onClick(View arg0) {
 				// Send single item click data to SingleItemView Class
 				Intent intent = new Intent(context, SingleItemView.class);
-				// Pass all data rank
-				intent.putExtra("rank",
-						(worldpopulationlist.get(position).getRank()));
-				// Pass all data country
-				intent.putExtra("country",
-						(worldpopulationlist.get(position).getCountry()));
-				// Pass all data population
-				intent.putExtra("population",
-						(worldpopulationlist.get(position).getPopulation()));
+
+				intent.putExtra("title",
+						(promocionesList.get(position).getTitle()));
+
+				intent.putExtra("subtitle",
+						(promocionesList.get(position).getSubtitle()));
+
+				intent.putExtra("description",
+						(promocionesList.get(position).getDescripcion()));
                 intent.putExtra("fecha",
-                        (worldpopulationlist.get(position).getFecha().toString()));
-				// Pass all data flag
-				intent.putExtra("flag",
-						(worldpopulationlist.get(position).getFlag()));
+                        (promocionesList.get(position).getFecha().toString()));
+
+				intent.putExtra("image",
+						(promocionesList.get(position).getImage()));
+
+                intent.putExtra("imageCodigo",
+                        (promocionesList.get(position).getImageCodigo()));
                 // Id
-                intent.putExtra("idPromo",(worldpopulationlist.get(position).getId()));
+                intent.putExtra("idPromo",(promocionesList.get(position).getId()));
 				// Start SingleItemView Class
 				context.startActivity(intent);
 			}

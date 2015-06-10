@@ -15,15 +15,16 @@ import com.parse.Parse;
 import com.parse.ParseACL;
 import com.parse.ParseException;
 import com.parse.ParseObject;
-import com.parse.ParseQuery;
 import com.parse.ParseUser;
-import project.ipromo.ParseActivity.MainActivity;
+
 import java.util.List;
 
+import project.ipromo.ParseActivity.BeaconsEmpresas;
+import project.ipromo.ParseActivity.Promociones;
 import project.ipromo.R;
 
 public class Login extends Activity {
-    MainActivity mainActivity = new MainActivity();
+    Promociones mainActivity = new Promociones();
     ParseObject parseobject;
     String Email;
     String Pass;
@@ -69,7 +70,7 @@ public class Login extends Activity {
                                     // If user exist and authenticated, send user to Welcome.class
                                     Intent intent = new Intent(
                                             Login.this,
-                                            MainActivity.class);
+                                            BeaconsEmpresas.class);
                                     startActivity(intent);
                                     Toast.makeText(getApplicationContext(),
                                             "Successfully Logged in",

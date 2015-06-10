@@ -24,9 +24,9 @@ import java.util.Collection;
 
 import project.ipromo.Constants;
 import project.ipromo.R;
+import project.ipromo.activity.Login;
 import project.ipromo.activity.Promocion1;
 import project.ipromo.iPromo;
-import project.ipromo.ParseActivity.MainActivity;
 
 // Service para hacer el scaneo de beacons BACKGROUND SCANNING
 // - En Background la frecuencia de escaneo es de 5 minutos
@@ -60,7 +60,7 @@ public class iPromoBeaconService extends Service implements BeaconConsumer {
         // ESTO SE HA PUESTO TAN SOLO PARA PODER HACER LA DEMO, YA QUE POR DEFECTO EL SCAN EN BACKGROUND ES DE 5 MINUTOS
         // Y ES EXCESIVO PARA MOSTRAR NADA
         beaconManager.setBackgroundScanPeriod(1100l); // set the duration of the scan to be 1.1 seconds
-        beaconManager.setBackgroundBetweenScanPeriod(60000l); // set the time between each scan to be 1 minute (60 seconds)
+        beaconManager.setBackgroundBetweenScanPeriod(30000l); // set the time between each scan to be 1 minute (60 seconds)
 
 
         // Layout para detectar iBeacons
@@ -193,7 +193,7 @@ public class iPromoBeaconService extends Service implements BeaconConsumer {
                 .setSmallIcon(R.drawable.ic_launcher); // TODO - Conseguir evitar el uso del import R para importar el ic_launcher
 
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(this);
-        stackBuilder.addNextIntent(new Intent(this, MainActivity.class)); // TODO - Recordar que aqui se ha de lanzar la activity que se pasará como parametro
+        stackBuilder.addNextIntent(new Intent(this,Login.class )); // TODO - Recordar que aqui se ha de lanzar la activity que se pasará como parametro
         PendingIntent resultPendingIntent = stackBuilder.getPendingIntent(0, PendingIntent.FLAG_UPDATE_CURRENT);
         builder.setContentIntent(resultPendingIntent);
 

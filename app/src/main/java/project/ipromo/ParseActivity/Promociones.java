@@ -1,16 +1,18 @@
 package project.ipromo.ParseActivity;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.res.TypedArray;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
+import android.widget.TextView;
 
 import com.parse.Parse;
 import com.parse.ParseACL;
@@ -24,21 +26,21 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import project.ipromo.R;
 import project.ipromo.activity.Login;
 import project.ipromo.service.iPromoBeaconService;
-import project.ipromo.R;
-
 
 import static project.ipromo.ParseActivity.Utils.getRoundedCornerBitmap;
 
-public class MainActivity extends Activity {
+public class Promociones extends ActionBarActivity {
 	// Declare Variables
 	ListView listview;
+    Bundle bundle;
 	List<ParseObject> ob;
     List<ParseObject> op;
 	ProgressDialog mProgressDialog;
 	ListViewAdapter adapter;
-	private List<WorldPopulation> worldpopulationlist = null;
+	private List<PromocionesTotal> promocionesList = null;
     ///menu lat///
     private String[] titulos;
     private DrawerLayout NavDrawerLayout;
@@ -50,6 +52,7 @@ public class MainActivity extends Activity {
     SingleItemView simplist;
     ///////
     iPromoBeaconService ipromobeaconservice;
+    BeaconsEmpresas beaconsEmpresas;
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -59,6 +62,7 @@ public class MainActivity extends Activity {
         simplist = new SingleItemView();
         menuLateral();
         ipromobeaconservice = new iPromoBeaconService();
+        beaconsEmpresas = new BeaconsEmpresas();
 		// Execute RemoteDataTask AsyncTask
         Parse.initialize(this, "TL06Yd6EASdGw77EdMzyf2XG03f9vR0WdbMqC1vF", "oHlxDUfAhGWpaYDnKJU3aQefpQxWgJ7PQEececAS");
         ParseUser.enableAutomaticUser();
@@ -69,9 +73,20 @@ public class MainActivity extends Activity {
         ParseACL.setDefaultACL(defaultACL, true);
 		new RemoteDataTask().execute();
 
+        bundle = getIntent().getExtras();
 
-        Toast info = Toast.makeText(MainActivity.this,login.idUser+","+simplist.idPromo,Toast.LENGTH_LONG);
-        info.show();
+
+
+        EditText editText = (EditText)findViewById(R.id.search);
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+
+                return false;
+            }
+
+
+        });
 	}
 
 	// RemoteDataTask AsyncTask
@@ -80,9 +95,9 @@ public class MainActivity extends Activity {
 		protected void onPreExecute() {
 			super.onPreExecute();
 			// Create a progressdialog
-			mProgressDialog = new ProgressDialog(MainActivity.this);
+			mProgressDialog = new ProgressDialog(Promociones.this);
 			// Set progressdialog title
-			mProgressDialog.setTitle("Parse.com Custom ListView Tutorial");
+			mProgressDialog.setTitle("iPromo");
 			// Set progressdialog message
 			mProgressDialog.setMessage("Loading...");
 			mProgressDialog.setIndeterminate(false);
@@ -93,65 +108,43 @@ public class MainActivity extends Activity {
 		@Override
 		protected Void doInBackground(Void... params) {
 			// Create the array
-			worldpopulationlist = new ArrayList<WorldPopulation>();
+            promocionesList = new ArrayList<PromocionesTotal>();
 			try {
 				// Locate the class table named "Country" in Parse.com
 				ParseQuery<ParseObject> query = new ParseQuery<ParseObject>(
 						"Promocion");
-                ParseQuery<ParseObject> query2 = new ParseQuery<ParseObject>(
-                        "User_Prom");
+
 
 				// Locate the column named
 				// by ascending
 
 
 				query.orderByAscending("createdAt");
-                query2.orderByAscending("createdAt");
-
-                op = query2.find();
-                for (ParseObject country2 : op) {
-                    // Locate images
-
-                    if(login.idUser.equals(country2.get("id_user"))&&simplist.idPromo.equals(country2.get("id_prom"))){
-
-                    }else{
-                        ob = query.find();
-                        for (ParseObject country : ob) {
-                            // Locate images in flag column
-                            if(country.get("Uuid").toString().equals(ipromobeaconservice.idBeacon)){
-                                ParseFile image = (ParseFile) country.get("Image");
-                                WorldPopulation map = new WorldPopulation();
-                                map.setRank((String) country.get("Title"));
-                                map.setCountry((String) country.get("Precio"));
-                                map.setFecha((Date) country.get("Date_end"));
-                                map.setPopulation((String) country.get("Description"));
-                                map.setId((String) country.get("objectId"));
-                                map.setFlag(image.getUrl());
-                                worldpopulationlist.add(map);}
-                        }
-                }
-                ///
 
 
-                }
+
                 ob = query.find();
-                for (ParseObject country : ob) {
+                for (ParseObject promo : ob) {
                     // Locate images
-                    if(country.get("Uuid").toString().equals(ipromobeaconservice.idBeacon)){
-                        ParseFile image = (ParseFile) country.get("Image");
-                        WorldPopulation map = new WorldPopulation();
-                        map.setRank((String) country.get("Title"));
-                        map.setCountry((String) country.get("Precio"));
-                        map.setFecha((Date) country.get("Date_end"));
-                        map.setPopulation((String) country.get("Description"));
-                        map.setId((String) country.get("objectId"));
-                        map.setFlag(image.getUrl());
-                        worldpopulationlist.add(map);}
+                    if(promo.get("Uuid").toString().equals(bundle.getString("id"))){
+                        ParseFile image = (ParseFile) promo.get("Image");
+                        ParseFile imageCodigo = (ParseFile) promo.get("ImageCodigo");
+                        PromocionesTotal prom = new PromocionesTotal();
+                        prom.setTitle((String) promo.get("Title"));
+                        prom.setPrecio((String) promo.get("Precio"));
+                        prom.setFecha((Date) promo.get("Date_end"));
+                        prom.setDescripcion((String) promo.get("Description"));
+                        prom.setId((String) promo.get("objectId"));
+                        prom.setImageCodigo(imageCodigo.getUrl());
+                        prom.setImage(image.getUrl());
+                        promocionesList.add(prom);}
                 }
+
 			} catch (ParseException e) {
 				Log.e("Error", e.getMessage());
 				e.printStackTrace();
 			}
+
 			return null;
 		}
 
@@ -160,8 +153,8 @@ public class MainActivity extends Activity {
 			// Locate the listview in listview_main.xml
 			listview = (ListView) findViewById(R.id.listview);
 			// Pass the results into ListViewAdapter.java
-			adapter = new ListViewAdapter(MainActivity.this,
-					worldpopulationlist);
+			adapter = new ListViewAdapter(Promociones.this,
+                    promocionesList);
 			// Binds the Adapter to the ListView
 			listview.setAdapter(adapter);
 			// Close the progressdialog
@@ -200,5 +193,7 @@ public class MainActivity extends Activity {
         ImageView imageView = new ImageView(this);
         imageView.setImageBitmap(getRoundedCornerBitmap(getResources().getDrawable(R.drawable.perfil), true));
     }
+
+
 
 }

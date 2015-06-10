@@ -1,26 +1,20 @@
 package project.ipromo.ParseActivity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
+import android.support.v7.app.ActionBarActivity;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.parse.Parse;
-import com.parse.ParseObject;
-import com.parse.ParseQuery;
-
-import java.util.Date;
-
 import project.ipromo.R;
 
-public class SingleItemView extends Activity {
+public class SingleItemView extends ActionBarActivity {
 	// Declare Variables
 	String title;
 	String subtitle;
 	String description;
 	String image;
+    String imageCodigo;
 	String position;
     String fecha;
     String idPromo;
@@ -34,41 +28,34 @@ public class SingleItemView extends Activity {
 
 		Intent i = getIntent();
 		// Get the result of rank
-		title = i.getStringExtra("rank");
+		title = i.getStringExtra("title");
 		// Get the result of country
-		subtitle = i.getStringExtra("country");
+		subtitle = i.getStringExtra("subtitle");
 		// Get the result of population
-		description = i.getStringExtra("population");
+		description = i.getStringExtra("description");
 		// Get the result of flag
-		image = i.getStringExtra("flag");
+		image = i.getStringExtra("image");
+        imageCodigo = i.getStringExtra("imageCodigo");
 
         fecha = i.getStringExtra("fecha");
 
         idPromo = i.getStringExtra("idPromo");
 		// Locate the TextViews in singleitemview.xml
-		TextView txtrank = (TextView) findViewById(R.id.rank);
-		TextView txtcountry = (TextView) findViewById(R.id.country);
-		TextView txtpopulation = (TextView) findViewById(R.id.population);
-        TextView txtfecha = (TextView)findViewById(R.id.textView);
-        TextView txtid = (TextView)findViewById(R.id.txtId);
+		TextView txttitle = (TextView) findViewById(R.id.title);
+
+		TextView txtdescription = (TextView) findViewById(R.id.description);
+
+
 		// Locate the ImageView in singleitemview.xml
-		ImageView imgflag = (ImageView) findViewById(R.id.flag);
-
+		ImageView imageCupon = (ImageView) findViewById(R.id.image);
+        ImageView imagenCodigo = (ImageView)findViewById(R.id.imageCodigo);
 		// Set results to the TextViews
-		txtrank.setText(title);
-		txtcountry.setText(subtitle);
-		txtpopulation.setText(description);
-        txtfecha.setText(fecha);
-        txtid.setText(idPromo);
+        txttitle.setText(title);
+		txtdescription.setText(description);
 
-		// Capture position and set results to the ImageView
-		// Passes flag images URL into ImageLoader.class
-		imageLoader.DisplayImage(image, imgflag);
+
+		imageLoader.DisplayImage(image, imageCupon);
+        imageLoader.DisplayImage(imageCodigo, imagenCodigo);
 	}
-    public void canjearCupo(View view){
-        ParseObject object = new ParseObject("User_Prom");
-        object.put("id_prom",idPromo);
-        object.saveInBackground();
 
-    }
 }
